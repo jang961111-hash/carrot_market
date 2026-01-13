@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { mockProductModels, mockMarketPrices } from '../mockData';
+import { aiUtils } from '../aiUtils';
 import './LiveBroadcastPage.css';
 
 interface ChatMessage {
@@ -9,12 +11,19 @@ interface ChatMessage {
   username: string;
   message: string;
   timestamp: Date;
+  type?: 'user' | 'ai';
 }
 
 interface Viewer {
   id: number;
   username: string;
   joinedAt: Date;
+}
+
+interface RecommendedQuestion {
+  question: string;
+  category: 'condition' | 'defect' | 'usage' | 'warranty' | 'delivery';
+  emoji: string;
 }
 
 export default function LiveBroadcastPage() {
@@ -27,6 +36,8 @@ export default function LiveBroadcastPage() {
   const [productTitle, setProductTitle] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [isSettingUp, setIsSettingUp] = useState(true);
+  const [recommendedQuestions, setRecommendedQuestions] = useState<RecommendedQuestion[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -100,6 +111,18 @@ export default function LiveBroadcastPage() {
     setIsLive(true);
     startMockStream();
 
+    // 선택된 상품 정보 설정
+    const product = mockProductModels.find(
+      (m) => m.name.toLowerCase().includes(productTitle.toLowerCase())
+    );
+    setSelectedProduct(product);
+
+    // AI 추천 질문 생성
+    if (product) {
+      const questions = aiUtils.generateRecommendedQuestions(product);
+      setRecommendedQuestions(questions);
+    }
+
     // Mock 시청자 추가
     setTimeout(() => {
       const mockViewers: Viewer[] = [
@@ -110,10 +133,10 @@ export default function LiveBroadcastPage() {
 
       // Mock 채팅 메시지
       setTimeout(() => {
-        addMockMessage(2, '구매자1', '안녕하세요!');
+        addMockMessage(2, '구매자1', '안녕하세요! 상품 상태 좋아보이네요');
       }, 2000);
       setTimeout(() => {
-        addMockMessage(3, '구매자2', '상품 상태 좋아보이네요');
+        addMockMessage(3, '구매자2', '배송 가능한가요?');
       }, 4000);
     }, 3000);
   };
@@ -144,9 +167,39 @@ export default function LiveBroadcastPage() {
         username: user?.nickname || '판매자',
         message: chatInput,
         timestamp: new Date(),
+        type: 'user',
       },
     ]);
     setChatInput('');
+
+    // AI 질문에 대한 답변 Mock (3초 후)
+    if (
+      recommendedQuestions.length > 0 &&
+      Math.random() > 0.7
+    ) {
+      setTimeout(() => {
+        const randomQuestion =
+          recommendedQuestions[
+            Math.floor(Math.random() * recommendedQuestions.length)
+          ];
+        const answer = aiUtils.generateAIMockAnswer(
+          randomQuestion.question,
+          selectedProduct || { name: productTitle, category: '', currentPrice: parseInt(productPrice) }
+        );
+
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now(),
+            userId: 999,
+            username: '🤖 AI 어시스턴트',
+            message: answer,
+            timestamp: new Date(),
+            type: 'ai',
+          },
+        ]);
+      }, 1000);
+    }
   };
 
   // 방송 종료
@@ -289,6 +342,29 @@ export default function LiveBroadcastPage() {
               <h3>💬 실시간 채팅</h3>
               <span className="chat-count">{chatMessages.length}</span>
             </div>
+
+            {recommendedQuestions.length > 0 && (
+              <div className="ai-questions-section">
+                <div className="ai-questions-header">
+                  <h4>🤖 AI 추천 질문</h4>
+                </div>
+                <div className="ai-questions-list">
+                  {recommendedQuestions.map((question, index) => (
+                    <div
+                      key={index}
+                      className="ai-question-item"
+                      onClick={() => {
+                        setChatInput(`${question.emoji} ${question.question}`);
+                      }}
+                    >
+                      <span className="question-emoji">{question.emoji}</span>
+                      <span className="question-text">{question.question}</span>
+                      <span className="question-category">{question.category}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="chat-messages">
               {chatMessages.map((msg) => (

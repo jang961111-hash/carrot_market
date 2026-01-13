@@ -545,3 +545,116 @@
     justify-content: space-around;
   }
 }
+
+/* AI Recommended Questions Styles */
+.ai-questions-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 2px solid #e0e7ff;
+}
+
+.ai-questions-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ai-questions-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0;
+}
+
+.ai-questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ai-question-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  border-left: 4px solid #667eea;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.ai-question-item:hover {
+  background: #f0f4ff;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.question-emoji {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.question-text {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.question-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #667eea;
+  background: #eef2ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* AI Message Styling in Chat */
+.chat-message.ai-response {
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+  border-left: 4px solid #667eea;
+}
+
+.chat-message.ai-response .message-username::before {
+  content: '🤖 ';
+  margin-right: 4px;
+}
+
+.chat-message.ai-response .message-username {
+  color: #667eea;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .ai-questions-section {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .ai-questions-list {
+    max-height: 150px;
+  }
+
+  .ai-question-item {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .question-text {
+    font-size: 0.85rem;
+  }
+
+  .question-category {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+}
