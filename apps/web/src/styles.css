@@ -1,0 +1,710 @@
+﻿/* 전역 변수 */
+:root {
+  --primary: #ff6f0f;
+  --secondary: #f0f0f0;
+  --text: #333;
+  --text-light: #666;
+  --border: #ddd;
+  --success: #4caf50;
+  --danger: #e53935;
+  --background: #f6f7f8;
+}
+
+/* 기본 리셋 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+/* 앱 레이아웃 */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 네비게이션 */
+.navbar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-menu a:hover {
+  color: var(--primary);
+}
+
+.badge {
+  background: var(--danger);
+  color: white;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  margin-left: 5px;
+}
+
+/* 메인 컨텐츠 */
+.main-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 컨테이너 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 카테고리 필터 */
+.category-filter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.category-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.category-btn:hover {
+  background: var(--secondary);
+}
+
+.category-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* 상품 그리드 */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.item-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.item-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.price-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+.price-badge.good {
+  background: #4caf50;
+  color: white;
+}
+
+.price-badge.bad {
+  background: #ff9800;
+  color: white;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.item-info {
+  padding: 12px;
+}
+
+.item-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-model {
+  font-size: 0.8rem;
+  color: #999;
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.price-comparison {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.price-comparison.great {
+  color: #4caf50;
+}
+
+.price-comparison.good {
+  color: #8bc34a;
+}
+
+.price-comparison.fair {
+  color: #666;
+}
+
+.price-comparison.expensive {
+  color: #ff9800;
+}
+
+.item-location {
+  font-size: 0.875rem;
+  color: var(--text-light);
+}
+
+/* 상품 상세 */
+.item-detail {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.item-detail-image {
+  width: 100%;
+}
+
+.item-detail-image img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.item-detail-info h1 {
+  font-size: 1.75rem;
+  margin-bottom: 16px;
+}
+
+.model-info {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 3px solid var(--primary);
+}
+
+.model-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 6px 0;
+}
+
+.model-specs {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.price-section {
+  margin-bottom: 20px;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.price-comparison-card {
+  background: white;
+  border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.price-comparison-card h4 {
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.price-comparison-card.great {
+  border-color: #4caf50;
+  background: #f1f8f4;
+}
+
+.price-comparison-card.good {
+  border-color: #8bc34a;
+  background: #f5f9f0;
+}
+
+.price-comparison-card.expensive {
+  border-color: #ff9800;
+  background: #fff8f0;
+}
+
+.price-comparison-card.fair {
+  border-color: #ddd;
+  background: #fafafa;
+}
+
+.comparison-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(255, 111, 15, 0.1);
+}
+
+.comparison-row:last-of-type {
+  border-bottom: none;
+  margin-bottom: 8px;
+}
+
+.comparison-row .bold {
+  font-weight: 600;
+  color: #333;
+}
+
+.comparison-status {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 111, 15, 0.2);
+}
+
+.comparison-status p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.good-deal {
+  color: #4caf50;
+}
+
+.bad-deal {
+  color: #ff9800;
+}
+
+.location {
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.condition {
+  color: var(--text-light);
+  margin-bottom: 20px;
+}
+
+.seller-info, .description {
+  margin-bottom: 24px;
+}
+
+.seller-info h3, .description h3 {
+  font-size: 1.125rem;
+  margin-bottom: 12px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--text);
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  opacity: 0.9;
+}
+
+/* 채팅 페이지 */
+.chat-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  height: calc(100vh - 140px);
+}
+
+.chat-rooms {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.chat-rooms h2 {
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+}
+
+.rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.room-item {
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: 1px solid transparent;
+}
+
+.room-item:hover {
+  background: var(--secondary);
+}
+
+.room-item.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.room-item h4 {
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.last-message {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room-item.active .last-message {
+  color: rgba(255,255,255,0.8);
+}
+
+/* 채팅 메시지 */
+.chat-messages {
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.messages-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.messages-header h2 {
+  font-size: 1.25rem;
+}
+
+.messages-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.message.sent {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.message.received {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.message-content {
+  padding: 10px 14px;
+  border-radius: 16px;
+  word-wrap: break-word;
+}
+
+.message.sent .message-content {
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message.received .message-content {
+  background: var(--secondary);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+.message-input {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.message-input input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  outline: none;
+}
+
+.message-input button {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.no-room-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-light);
+}
+
+/* 통화 페이지 */
+.call-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background: #1a1a1a;
+  min-height: calc(100vh - 60px);
+  color: white;
+}
+
+.call-page h1 {
+  margin-bottom: 30px;
+}
+
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-bottom: 30px;
+}
+
+.local-video, .remote-video {
+  position: relative;
+  background: #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.local-video video, .remote-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.local-video p, .remote-video p {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.6);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.call-controls {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.call-controls button {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.call-controls button:hover {
+  transform: scale(1.05);
+}
+
+.btn-call {
+  background: var(--success);
+  color: white;
+}
+
+.btn-accept {
+  background: var(--success);
+  color: white;
+}
+
+.btn-reject {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-end {
+  background: var(--danger);
+  color: white;
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 1.125rem;
+  color: rgba(255,255,255,0.7);
+}
+
+/* 로딩 & 에러 */
+.loading, .error {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-light);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .chat-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .chat-rooms {
+    max-height: 200px;
+  }
+  
+  .item-detail {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

@@ -1,0 +1,65 @@
+# Dependency and build artifacts
+node_modules/
+dist/
+build/
+.env.local
+.env.*.local
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Application specific
+.env
+auth_token
+*.pem
+*.key
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Gradle
+.gradle/
+build/
+*.class
+
+# Java
+*.jar
+*.war
+*.ear
+target/
+
+# Docker
+.dockerignore
+Dockerfile
+
+# Docker Compose
+docker-compose.override.yml
+
+# Spring Boot
+application-local.properties
+application-dev.properties
+
+# Python (for YOLOv8)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+
+# Vite
+.vite/
+
+# Package lock files (optional - uncomment if you want to commit them)
+# package-lock.json
+# yarn.lock

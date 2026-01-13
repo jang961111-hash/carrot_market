@@ -1,0 +1,15 @@
+﻿{
+  "name": "daangn-clone",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "concurrently -n web,server -c green,cyan \"npm:dev-web\" \"npm:dev-server\"",
+    "dev-web": "npm --workspace apps/web run dev",
+    "dev-server": "npm --workspace apps/server run dev",
+    "build": "npm -w apps/web run build && npm -w apps/server run build",
+    "start": "node apps/server/index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

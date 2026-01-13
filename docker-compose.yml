@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: carrot-postgres
+    environment:
+      POSTGRES_DB: daangn_db
+      POSTGRES_USER: daangn_user
+      POSTGRES_PASSWORD: daangn_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - carrot-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U daangn_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot API Server
+  api-server:
+    build:
+      context: ./api-server
+      dockerfile: Dockerfile
+    container_name: carrot-api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/daangn_db
+      SPRING_DATASOURCE_USERNAME: daangn_user
+      SPRING_DATASOURCE_PASSWORD: daangn_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - carrot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # Redis (for real-time features)
+  redis:
+    image: redis:7-alpine
+    container_name: carrot-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - carrot-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Node.js Signaling Server (WebRTC)
+  signaling:
+    build:
+      context: ./signaling
+      dockerfile: Dockerfile
+    container_name: carrot-signaling
+    ports:
+      - "3001:3001"
+    networks:
+      - carrot-network
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - api-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: carrot-web
+    ports:
+      - "5173:5173"
+    networks:
+      - carrot-network
+    environment:
+      VITE_API_URL: http://localhost:8080/api
+      VITE_SIGNALING_URL: http://localhost:3001
+    depends_on:
+      - api-server
+      - signaling
+
+networks:
+  carrot-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
