@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { itemAPI, chatAPI } from '../api';
 import { getPriceComparison, getMarketPrice, mockProductModels } from '../mockData';
 
@@ -8,6 +8,7 @@ export default function ItemDetailPage({ userId }: { userId: number }) {
   const navigate = useNavigate();
   const [item, setItem] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [similarItems, setSimilarItems] = useState<any[]>([]);
 
   useEffect(() => {
     loadItem();
@@ -18,6 +19,13 @@ export default function ItemDetailPage({ userId }: { userId: number }) {
       setLoading(true);
       const data = await itemAPI.getItem(itemId);
       setItem(data);
+      
+      // 유사 상품 로드 (같은 카테고리)
+      const allItems = await itemAPI.listItems({ category: data.category });
+      const similar = allItems
+        .filter((i: any) => i.id !== data.id)
+        .slice(0, 4);
+      setSimilarItems(similar);
     } catch (error) {
       console.error('Failed to load item:', error);
     } finally {
@@ -99,7 +107,41 @@ export default function ItemDetailPage({ userId }: { userId: number }) {
           
           <div className="seller-info">
             <h3>판매자 정보</h3>
-            <p>닉네임: {item.sellerNickname || 'Unknown'}</p>
+            <div className="seller-card">
+              <div className="seller-avatar">👤</div>
+              <div className="seller-details">
+                <p className="seller-name">{item.sellerNickname || 'Unknown'}</p>
+                <p className="seller-location">📍 {item.location || '위치 정보 없음'}</p>
+                
+                {/* 매너 온도 시각화 */}
+                <div className="manner-temp">
+                  <p className="manner-label">매너 온도</p>
+                  <div className="manner-gauge">
+                    <div className="manner-fill" style={{ width: '76%' }}></div>
+                  </div>
+                  <p className="manner-value">36.5°C</p>
+                </div>
+                
+                <div className="seller-stats">
+                  <div className="stat">
+                    <p className="stat-value">127</p>
+                    <p className="stat-label">거래건수</p>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-value">98%</p>
+                    <p className="stat-label">긍정평가</p>
+                  </div>
+                  <div className="stat">
+                    <p className="stat-value">⭐ 4.8</p>
+                    <p className="stat-label">평점</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button className="btn-seller-profile">
+              👤 판매자 프로필 보기
+            </button>
           </div>
 
           <div className="description">
@@ -117,6 +159,27 @@ export default function ItemDetailPage({ userId }: { userId: number }) {
           </div>
         </div>
       </div>
+
+      {/* 유사 상품 추천 섹션 */}
+      {similarItems.length > 0 && (
+        <div className="similar-section">
+          <h2 className="section-title">비슷한 상품</h2>
+          <div className="similar-grid">
+            {similarItems.map((similarItem: any) => (
+              <Link key={similarItem.id} to={`/item/${similarItem.id}`} className="similar-card">
+                <div className="similar-image">
+                  <img src="https://via.placeholder.com/150" alt={similarItem.title} />
+                </div>
+                <div className="similar-info">
+                  <p className="similar-title">{similarItem.title}</p>
+                  <p className="similar-price">{similarItem.price?.toLocaleString()}원</p>
+                  <p className="similar-location">📍 {similarItem.location}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
