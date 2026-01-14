@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import SellPage from './pages/SellPage';
 import MarketBoardPage from './pages/MarketBoardPage';
 import LiveBroadcastPage from './pages/LiveBroadcastPage';
+import Footer from './components/Footer';
 import './styles.css';
 
 // 인증이 필요한 라우트 보호
@@ -118,6 +119,8 @@ function AppContent() {
           <Route path="*" element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />} />
         </Routes>
       </main>
+
+      {isAuthenticated && <Footer />}
     </div>
   );
 }
