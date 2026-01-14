@@ -28,6 +28,38 @@ export default function HomePage() {
     }
   };
 
+  const handleSearch = () => {
+    // 검색 실행 - 이미 searchTerm 상태로 필터링됨
+    window.scrollTo({ top: 600, behavior: 'smooth' });
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const getTileLink = (tileKey: string) => {
+    switch (tileKey) {
+      case '중고거래':
+        return '/';
+      case '알바/과외':
+        return '/';
+      case '부동산':
+        return '/';
+      case '중고차':
+        return '/';
+      case '동네업체':
+        return '/';
+      case '동네생활':
+        return '/';
+      case '모임':
+        return '/';
+      default:
+        return '/';
+    }
+  };
+
   return (
     <>
       {/* Hero Section (original design inspired by official site, not identical) */}
@@ -52,8 +84,9 @@ export default function HomePage() {
                 placeholder="검색어를 입력해 주세요"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
-              <button className="search-button">검색</button>
+              <button className="search-button" onClick={handleSearch}>검색</button>
             </div>
             <div className="chip-group">
               {['인기', '에어컨', '아이폰', '노트북', '원룸', '알바', '중고차'].map((chip) => (
@@ -72,10 +105,12 @@ export default function HomePage() {
               { key: '동네생활', emoji: '🧑‍🤝‍🧑' },
               { key: '모임', emoji: '🎉' }
             ].map((tile) => (
-              <div key={tile.key} className="tile">
-                <div className="tile-icon">{tile.emoji}</div>
-                <div className="tile-label">{tile.key}</div>
-              </div>
+              <Link key={tile.key} to={getTileLink(tile.key)} className="tile-link">
+                <div className="tile">
+                  <div className="tile-icon">{tile.emoji}</div>
+                  <div className="tile-label">{tile.key}</div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

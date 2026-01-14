@@ -10,6 +10,16 @@
   --background: #f6f7f8;
 }
 
+/* 다크 테마 */
+[data-theme='dark'] {
+  --primary: #ff8c42;
+  --secondary: #222;
+  --text: #eee;
+  --text-light: #aaa;
+  --border: #444;
+  --background: #121212;
+}
+
 /* 기본 리셋 */
 * {
   margin: 0;
@@ -72,6 +82,19 @@ body {
 
 .nav-menu a:hover {
   color: var(--primary);
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: transform 0.2s;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.15);
 }
 
 .badge {
@@ -841,6 +864,17 @@ body {
   font-weight: 700;
 }
 
+.tile-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tile-link:hover .tile {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(255, 111, 15, 0.2);
+}
+
 .section-title {
   font-size: 1.4rem;
   font-weight: 800;
@@ -849,4 +883,101 @@ body {
 
 @media (max-width: 768px) {
   .hero-title { font-size: 1.6rem; }
+  
+  .home-hero {
+    padding: 40px 16px 30px 16px;
+  }
+  
+  .search-bar {
+    flex-direction: column;
+  }
+  
+  .search-select, .search-input, .search-button {
+    width: 100%;
+  }
+  
+  .category-tiles {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  
+  .tile {
+    padding: 14px 10px;
+  }
+  
+  .tile-icon {
+    font-size: 1.2rem;
+  }
+  
+  .tile-label {
+    font-size: 0.9rem;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+    margin: 16px 0 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title { 
+    font-size: 1.3rem; 
+    margin: 4px 0 6px 0;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .home-hero {
+    padding: 30px 12px 20px 12px;
+  }
+  
+  .brand-name {
+    font-size: 0.95rem;
+  }
+  
+  .search-input::placeholder {
+    font-size: 0.85rem;
+  }
+  
+  .chip-group {
+    gap: 6px;
+    margin-top: 8px;
+  }
+  
+  .chip {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+  .category-tiles {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .tile {
+    padding: 12px 8px;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .tile-icon {
+    font-size: 1rem;
+  }
+  
+  .tile-label {
+    font-size: 0.8rem;
+  }
+  
+  .section-title {
+    font-size: 1rem;
+    margin: 12px 0 8px 0;
+  }
+  
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
 }

@@ -30,6 +30,19 @@ function AppContent() {
   const { user, isAuthenticated } = useAuth();
   const [socket, setSocket] = useState<any>(null);
   const [unreadMessages, setUnreadMessages] = useState(0);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('app-theme');
+    return (saved as 'light' | 'dark') || 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('app-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -71,6 +84,15 @@ function AppContent() {
               </li>
               <li><Link to="/profile">프로필</Link></li>
               <li><Link to="/sell">판매하기</Link></li>
+              <li>
+                <button
+                  className="theme-toggle-btn"
+                  onClick={toggleTheme}
+                  title={`${theme === 'light' ? '어두운' : '밝은'} 테마로 변경`}
+                >
+                  {theme === 'light' ? '🌙' : '☀️'}
+                </button>
+              </li>
             </ul>
           </div>
         </nav>
