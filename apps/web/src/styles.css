@@ -708,3 +708,145 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
+
+/* Home hero (original design, not a copy of official site) */
+.home-hero {
+  background: #0f0f12;
+  color: #fff;
+  padding: 60px 20px 40px 20px;
+}
+
+.home-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.brand-icon {
+  font-size: 1.4rem;
+}
+
+.brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 6px 0 8px 0;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 18px;
+}
+
+.hero-search {
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-select {
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #1a1a1d;
+  color: #fff;
+  padding: 0 10px;
+}
+
+.search-input {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #1a1a1d;
+  color: #fff;
+  padding: 0 14px;
+}
+
+.search-input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+.search-button {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chip-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.chip {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #151518;
+  color: #fff;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: rgba(255,255,255,0.35);
+}
+
+.category-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.tile {
+  background: #161619;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 18px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tile-icon {
+  font-size: 1.4rem;
+}
+
+.tile-label {
+  color: rgba(255,255,255,0.88);
+  font-weight: 700;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 24px 0 12px 0;
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 1.6rem; }
+}
