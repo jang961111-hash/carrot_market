@@ -1,7 +1,7 @@
 {
   "name": "signaling-server",
   "version": "1.0.0",
-  "description": "WebRTC Signaling Server for Daangn Market",
+  "description": "WebRTC Signaling Server for 당근마켓 Live+",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",

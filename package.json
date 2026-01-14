@@ -1,5 +1,5 @@
 ﻿{
-  "name": "daangn-clone",
+  "name": "carrot-market-live-plus",
   "private": true,
   "workspaces": ["apps/*"],
   "scripts": {

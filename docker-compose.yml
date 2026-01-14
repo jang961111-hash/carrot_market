@@ -4,7 +4,7 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
-    container_name: carrot-postgres
+    container_name: carrot-market-live-plus-postgres
     environment:
       POSTGRES_DB: daangn_db
       POSTGRES_USER: daangn_user
@@ -26,7 +26,7 @@ services:
     build:
       context: ./api-server
       dockerfile: Dockerfile
-    container_name: carrot-api
+    container_name: carrot-market-live-plus-api
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/daangn_db
       SPRING_DATASOURCE_USERNAME: daangn_user

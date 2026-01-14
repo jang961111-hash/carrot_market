@@ -58,7 +58,7 @@ function AppContent() {
         <nav className="navbar">
           <div className="nav-container">
             <Link to="/" className="nav-logo">
-              🥕 당근마켓
+              🥕 당근마켓 Live+
             </Link>
             <ul className="nav-menu">
               <li><Link to="/">홈</Link></li>
